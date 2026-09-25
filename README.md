@@ -7,7 +7,7 @@ Designed with a high-contrast **Orange, Black, and White** color palette, full *
 ---
 
 ## Live Demo & Repository
-- **GitHub Repository**: *(Your repository URL)*
+- **GitHub Repository**: [https://github.com/YashKharalkar/Nexgensis-Task](https://github.com/YashKharalkar/Nexgensis-Task)
 - **Live Deployment**: *(Vercel / Netlify URL)*
 
 ---
@@ -31,8 +31,8 @@ Modern corporate palette using the requested colors:
 ### 2. Clone and Install
 ```bash
 # Clone the repository
-git clone <your-repo-url>
-cd "Nexgensis Task"
+git clone https://github.com/YashKharalkar/Nexgensis-Task.git
+cd Nexgensis-Task
 
 # Install dependencies
 npm install
