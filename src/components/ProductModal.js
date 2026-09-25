@@ -76,7 +76,6 @@ export default function ProductModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prevent duplicate rapid submissions
     if (!validate() || isSubmitting) return;
 
     setIsSubmitting(true);
@@ -105,8 +104,6 @@ export default function ProductModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#072D44]/60 backdrop-blur-sm">
       <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl border border-[#D5E4EE] overflow-hidden">
-        
-        {/* Header in Deep Navy #072D44 */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#064469] bg-[#072D44] text-white">
           <h2 className="text-base font-bold">
             {isEditMode ? 'Edit Product' : 'Add New Product'}
@@ -119,7 +116,6 @@ export default function ProductModal({
           </button>
         </div>
 
-        {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
           {errors.form && (
             <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium">
@@ -127,7 +123,6 @@ export default function ProductModal({
             </div>
           )}
 
-          {/* Title */}
           <div>
             <label className="block text-xs font-bold text-[#072D44] mb-1">
               Product Title <span className="text-[#064469]">*</span>
@@ -145,7 +140,6 @@ export default function ProductModal({
             {errors.title && <p className="text-xs text-red-600 mt-1 font-medium">{errors.title}</p>}
           </div>
 
-          {/* Price (INR) & Stock */}
           <div className="grid grid-cols-2 gap-3.5">
             <div>
               <label className="block text-xs font-bold text-[#072D44] mb-1">
@@ -174,7 +168,7 @@ export default function ProductModal({
                 id="product-stock-input"
                 value={formData.stock}
                 onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
-                placeholder="50"
+                placeholder="10"
                 className={`w-full px-3 py-2 rounded-lg border text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition ${
                   errors.stock ? 'border-red-400 bg-red-50/40' : 'border-[#D5E4EE] bg-white'
                 }`}
@@ -183,7 +177,6 @@ export default function ProductModal({
             </div>
           </div>
 
-          {/* Category & Brand */}
           <div className="grid grid-cols-2 gap-3.5">
             <div>
               <label className="block text-xs font-bold text-[#072D44] mb-1">
@@ -193,11 +186,8 @@ export default function ProductModal({
                 id="product-category-input"
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className={`w-full px-3 py-2 rounded-lg border text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition bg-white cursor-pointer ${
-                  errors.category ? 'border-red-400 bg-red-50/40' : 'border-[#D5E4EE]'
-                }`}
+                className="w-full px-3 py-2 rounded-lg border border-[#D5E4EE] bg-white text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition cursor-pointer"
               >
-                <option value="">Select Category</option>
                 {categories.map((cat) => {
                   const slug = typeof cat === 'object' ? cat.slug : cat;
                   const name = typeof cat === 'object' ? cat.name : cat;
@@ -208,56 +198,46 @@ export default function ProductModal({
                   );
                 })}
               </select>
-              {errors.category && <p className="text-xs text-red-600 mt-1 font-medium">{errors.category}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#072D44] mb-1">
-                Brand
-              </label>
+              <label className="block text-xs font-bold text-[#072D44] mb-1">Brand</label>
               <input
                 type="text"
                 id="product-brand-input"
                 value={formData.brand}
                 onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-                placeholder="e.g. Tata, Boat, Titan"
+                placeholder="e.g. Sony, Apple"
                 className="w-full px-3 py-2 rounded-lg border border-[#D5E4EE] bg-white text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition"
               />
             </div>
           </div>
 
-          {/* Image URL */}
           <div>
-            <label className="block text-xs font-bold text-[#072D44] mb-1">
-              Image URL
-            </label>
+            <label className="block text-xs font-bold text-[#072D44] mb-1">Image URL</label>
             <input
               type="url"
               id="product-image-input"
               value={formData.thumbnail}
               onChange={(e) => setFormData({ ...formData, thumbnail: e.target.value })}
-              placeholder="https://example.com/product-image.jpg"
+              placeholder="https://example.com/image.jpg"
               className="w-full px-3 py-2 rounded-lg border border-[#D5E4EE] bg-white text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition"
             />
           </div>
 
-          {/* Description */}
           <div>
-            <label className="block text-xs font-bold text-[#072D44] mb-1">
-              Description
-            </label>
+            <label className="block text-xs font-bold text-[#072D44] mb-1">Description</label>
             <textarea
               rows={3}
               id="product-description-input"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Detailed description of the product..."
+              placeholder="Product details and features..."
               className="w-full px-3 py-2 rounded-lg border border-[#D5E4EE] bg-white text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition resize-none"
             />
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-zinc-100">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-zinc-100">
             <button
               type="button"
               onClick={onClose}
@@ -276,7 +256,6 @@ export default function ProductModal({
             </button>
           </div>
         </form>
-
       </div>
     </div>
   );

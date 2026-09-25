@@ -23,7 +23,6 @@ export default function ProductTable({ products, onEdit, onDelete }) {
     <div className="hidden md:block bg-white rounded-xl border border-[#D5E4EE] overflow-hidden shadow-sm">
       <div className="overflow-x-auto">
         <table className="w-full text-left">
-          {/* Header in Deep Navy #072D44 with react-icons and slightly increased font size */}
           <thead className="bg-[#072D44] text-white text-[14px] font-bold uppercase tracking-wider">
             <tr>
               <th scope="col" className="px-5 py-3.5">
@@ -62,7 +61,6 @@ export default function ProductTable({ products, onEdit, onDelete }) {
             </tr>
           </thead>
 
-          {/* Body with slightly increased font sizes and clean transparent category & stock */}
           <tbody className="divide-y divide-zinc-100 bg-white">
             {products.map((product) => {
               const stock = Number(product.stock) || 0;
@@ -85,7 +83,6 @@ export default function ProductTable({ products, onEdit, onDelete }) {
                   key={product.id}
                   className="hover:bg-[#F0F6FA]/60 transition-colors"
                 >
-                  {/* Thumbnail & Product Title (Font size 16px) */}
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-3">
                       <div className="w-11 h-11 rounded-lg bg-[#F0F6FA] border border-[#D5E4EE] overflow-hidden shrink-0 flex items-center justify-center p-1">
@@ -113,7 +110,6 @@ export default function ProductTable({ products, onEdit, onDelete }) {
                     </div>
                   </td>
 
-                  {/* Category (Font size 14.5px, no background) */}
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-1.5 text-[14.5px] font-medium text-[#072D44] capitalize">
                       <FiTag className="w-3.5 h-3.5 text-[#064469]/80 shrink-0" />
@@ -121,7 +117,6 @@ export default function ProductTable({ products, onEdit, onDelete }) {
                     </div>
                   </td>
 
-                  {/* Price in INR (Font size 16.5px) */}
                   <td className="px-5 py-3.5">
                     <div className="font-extrabold text-[#072D44] text-[16.5px]">
                       {formatINR(product.price)}
@@ -133,7 +128,6 @@ export default function ProductTable({ products, onEdit, onDelete }) {
                     )}
                   </td>
 
-                  {/* Rating (Font size 14.5px with yellow BsStarFill) */}
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-1.5">
                       <BsStarFill className="w-4 h-4 text-yellow-400 fill-yellow-400 shrink-0" />
@@ -143,7 +137,6 @@ export default function ProductTable({ products, onEdit, onDelete }) {
                     </div>
                   </td>
 
-                  {/* Stock (Font size 14.5px, no background, status dot) */}
                   <td className="px-5 py-3.5">
                     <div className="flex items-center text-[14.5px] font-semibold">
                       <span className={`inline-block w-2.5 h-2.5 rounded-full mr-2 shrink-0 ${stockDotColor}`} />
@@ -151,7 +144,6 @@ export default function ProductTable({ products, onEdit, onDelete }) {
                     </div>
                   </td>
 
-                  {/* Actions (Font size 14px header, icons) */}
                   <td className="px-5 py-3.5 text-right">
                     <div className="flex items-center justify-end gap-1.5">
                       <Link

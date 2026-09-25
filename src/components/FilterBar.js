@@ -14,7 +14,6 @@ export default function FilterBar({
   onSortByChange,
   order,
   onOrderChange,
-  onOpenAddModal,
   totalResults = 0,
 }) {
   const [searchInput, setSearchInput] = useState(search);
@@ -23,7 +22,6 @@ export default function FilterBar({
     setSearchInput(search);
   }, [search]);
 
-  // Debounce search input: 400ms
   useEffect(() => {
     const timer = setTimeout(() => {
       if (searchInput !== search) {
@@ -46,11 +44,7 @@ export default function FilterBar({
 
   return (
     <div className="bg-white rounded-xl border border-[#D5E4EE] p-4 shadow-sm mb-6 space-y-3">
-      
-      {/* Search and Add Button Row */}
       <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
-        
-        {/* Search Box */}
         <div className="relative flex-1">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-400">
             <FiSearch className="w-4 h-4" />
@@ -77,7 +71,6 @@ export default function FilterBar({
           )}
         </div>
 
-        {/* Add Product Button (Navigates to /products/add new page) */}
         <Link
           href="/products/add"
           id="add-product-button"
@@ -88,10 +81,7 @@ export default function FilterBar({
         </Link>
       </div>
 
-      {/* Filters & Sorting Row */}
       <div className="flex flex-wrap items-center gap-2.5 pt-2 border-t border-zinc-100 text-xs">
-        
-        {/* Category Dropdown */}
         <div className="flex items-center gap-1.5 flex-1 min-w-[170px]">
           <FiFilter className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
           <select
@@ -116,7 +106,6 @@ export default function FilterBar({
           </select>
         </div>
 
-        {/* Sort By Dropdown */}
         <div className="flex-1 min-w-[150px]">
           <select
             id="sort-select"
@@ -131,7 +120,6 @@ export default function FilterBar({
           </select>
         </div>
 
-        {/* Sort Order Toggle */}
         {sortBy && (
           <div>
             <select
@@ -146,7 +134,6 @@ export default function FilterBar({
           </div>
         )}
 
-        {/* Clear / Reset Filters (Background removed, clean transparent outline) */}
         {hasActiveFilters && (
           <button
             onClick={handleClearFilters}
@@ -160,14 +147,12 @@ export default function FilterBar({
         )}
       </div>
 
-      {/* Note when searching */}
       {Boolean(searchInput.trim()) && (
         <div className="flex items-center gap-1.5 text-xs text-[#072D44] bg-[#F0F6FA] p-2 rounded-lg border border-[#D5E4EE]">
           <FiInfo className="w-3.5 h-3.5 shrink-0 text-[#064469]" />
-          <span>Searching across all categories. (DummyJSON API does not support combined category + search filtering).</span>
+          <span>Searching across all categories.</span>
         </div>
       )}
-
     </div>
   );
 }

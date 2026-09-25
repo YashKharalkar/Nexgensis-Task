@@ -31,14 +31,12 @@ export default function ProductDetailPage() {
   const [notFound, setNotFound] = useState(false);
   const [error, setError] = useState(null);
 
-  // Protected route check
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       router.replace('/login');
     }
   }, [authLoading, isAuthenticated, router]);
 
-  // Fetch product data by ID
   useEffect(() => {
     const fetchProduct = async () => {
       if (!id) return;
@@ -79,8 +77,6 @@ export default function ProductDetailPage() {
       <Navbar />
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6">
-        
-        {/* Back Link */}
         <div className="mb-4">
           <Link
             href="/products"
@@ -91,10 +87,8 @@ export default function ProductDetailPage() {
           </Link>
         </div>
 
-        {/* Loading State */}
         {loading && <LoadingSpinner text="Loading product details..." />}
 
-        {/* 404 Not Found */}
         {!loading && notFound && (
           <div className="bg-white rounded-2xl border border-[#D5E4EE] p-8 text-center max-w-sm mx-auto my-10 shadow-sm">
             <div className="w-12 h-12 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -113,7 +107,6 @@ export default function ProductDetailPage() {
           </div>
         )}
 
-        {/* Error State */}
         {!loading && !notFound && error && (
           <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center max-w-sm mx-auto my-8">
             <p className="text-red-700 text-xs font-semibold mb-3">{error}</p>
@@ -126,14 +119,9 @@ export default function ProductDetailPage() {
           </div>
         )}
 
-        {/* Product Details */}
         {!loading && !notFound && product && (
           <div className="space-y-6">
-            
-            {/* Top Grid: Images Gallery & Product Info */}
             <div className="bg-white rounded-2xl border border-[#D5E4EE] p-5 sm:p-6 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              {/* Image Gallery (Background and border removed per user request) */}
               <div className="space-y-3">
                 <div className="w-full h-72 sm:h-80 flex items-center justify-center p-2 overflow-hidden">
                   <img
@@ -166,24 +154,20 @@ export default function ProductDetailPage() {
                 )}
               </div>
 
-              {/* Product Info (All background badges removed per user request) */}
               <div className="flex flex-col justify-between">
                 <div>
                   <div className="flex flex-wrap items-center gap-3 mb-2.5">
-                    {/* Category (No background) */}
                     <div className="flex items-center gap-1 text-xs font-bold text-[#072D44] capitalize">
                       <FiTag className="w-3.5 h-3.5 text-[#064469]" />
                       <span>{product.category}</span>
                     </div>
 
-                    {/* Brand (No background) */}
                     {product.brand && (
                       <span className="text-xs font-semibold text-zinc-600">
                         Brand: <strong className="text-[#072D44]">{product.brand}</strong>
                       </span>
                     )}
 
-                    {/* SKU (No background) */}
                     {product.sku && (
                       <span className="text-xs text-zinc-400">
                         SKU: {product.sku}
@@ -195,9 +179,7 @@ export default function ProductDetailPage() {
                     {product.title}
                   </h1>
 
-                  {/* Rating & Stock (No background badges) */}
                   <div className="flex items-center gap-4 mb-4 pb-3 border-b border-zinc-100">
-                    {/* Rating (Yellow BsStarFill, no background) */}
                     <div className="flex items-center gap-1.5">
                       <BsStarFill className="w-4 h-4 text-yellow-400 fill-yellow-400 shrink-0" />
                       <span className="text-sm font-bold text-[#072D44]">
@@ -208,7 +190,6 @@ export default function ProductDetailPage() {
                       </span>
                     </div>
 
-                    {/* Stock (Status dot, no background) */}
                     <div className="flex items-center text-xs font-semibold">
                       <span
                         className={`inline-block w-2 h-2 rounded-full mr-1.5 shrink-0 ${
@@ -221,7 +202,6 @@ export default function ProductDetailPage() {
                     </div>
                   </div>
 
-                  {/* Price in INR & Discount (No background on discount) */}
                   <div className="mb-4">
                     <div className="flex items-baseline gap-2.5">
                       <span className="text-2xl sm:text-3xl font-black text-[#072D44]">
@@ -235,7 +215,6 @@ export default function ProductDetailPage() {
                     </div>
                   </div>
 
-                  {/* Description */}
                   <div className="mb-4">
                     <h2 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-1">
                       Description
@@ -246,7 +225,6 @@ export default function ProductDetailPage() {
                   </div>
                 </div>
 
-                {/* Shipping & Policies */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-4 border-t border-zinc-100 text-xs text-zinc-700 font-medium">
                   <div className="flex items-center gap-1.5">
                     <FiTruck className="w-4 h-4 text-[#064469] shrink-0" />
@@ -261,12 +239,9 @@ export default function ProductDetailPage() {
                     <span>{product.returnPolicy || '7-Day Easy Returns'}</span>
                   </div>
                 </div>
-
               </div>
-
             </div>
 
-            {/* Customer Reviews Section (Background removed, border kept per user instructions) */}
             <div className="bg-white rounded-2xl border border-[#D5E4EE] p-5 sm:p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
                 <FiMessageSquare className="w-4 h-4 text-[#064469]" />
@@ -326,10 +301,8 @@ export default function ProductDetailPage() {
                 </p>
               )}
             </div>
-
           </div>
         )}
-
       </main>
     </div>
   );

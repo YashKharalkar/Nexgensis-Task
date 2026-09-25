@@ -26,19 +26,15 @@ export default function DeleteConfirmModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
       <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl border border-zinc-200 p-6 text-center">
-        
-        {/* Warning Icon */}
         <div className="w-12 h-12 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 border border-red-200">
           <FiAlertTriangle className="w-6 h-6" />
         </div>
 
-        {/* Title & Description */}
         <h3 className="text-base font-bold text-zinc-900 mb-1.5">Delete Product</h3>
         <p className="text-xs text-zinc-600 mb-6">
           Are you sure you want to delete <span className="font-bold text-zinc-900">"{productTitle}"</span>? This will remove it from your inventory display.
         </p>
 
-        {/* Action Buttons */}
         <div className="flex items-center justify-center gap-2.5">
           <button
             type="button"
@@ -60,7 +56,6 @@ export default function DeleteConfirmModal({
             <span>Delete</span>
           </button>
         </div>
-
       </div>
     </div>
   );

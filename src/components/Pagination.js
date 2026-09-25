@@ -45,8 +45,6 @@ export default function Pagination({
 
   return (
     <div className="bg-white rounded-xl border border-[#D5E4EE] p-3.5 mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm text-xs">
-      
-      {/* Results counter & Per page dropdown */}
       <div className="flex flex-wrap items-center gap-3 text-zinc-600">
         <span>
           Showing <strong className="text-[#072D44]">{startItem}</strong>–
@@ -71,9 +69,7 @@ export default function Pagination({
         </div>
       </div>
 
-      {/* Prev / Pages / Next */}
       <div className="flex items-center gap-1">
-        
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage <= 1}
@@ -118,9 +114,7 @@ export default function Pagination({
           <span className="hidden sm:inline">Next</span>
           <FiChevronRight className="w-3.5 h-3.5" />
         </button>
-
       </div>
-
     </div>
   );
 }

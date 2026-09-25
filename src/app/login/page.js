@@ -14,7 +14,6 @@ export default function LoginPage() {
   const { login, isAuthenticated, loading } = useAuth();
   const router = useRouter();
 
-  // Redirect if already authenticated
   useEffect(() => {
     if (!loading && isAuthenticated) {
       router.replace('/products');
@@ -23,7 +22,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isSubmitting) return; // Prevent multiple clicks/requests
+    if (isSubmitting) return;
 
     setError('');
 
@@ -61,10 +60,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-white text-[#072D44] relative">
-      {/* Login Card (Increased length & breadth with border) */}
       <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-[#D5E4EE] p-8 sm:p-12">
-        
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-black text-[#072D44] tracking-tight">
             ADMIN<span className="text-[#064469]">HUB</span>
@@ -74,7 +70,6 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Error Message */}
         {error && (
           <div className="mb-5 p-3.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
             <FiAlertCircle className="w-4 h-4 text-red-500 shrink-0" />
@@ -82,10 +77,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
-          
-          {/* Username */}
           <div>
             <label className="block text-xs font-bold text-[#072D44] mb-1.5 uppercase tracking-wider">
               Username
@@ -108,7 +100,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-xs font-bold text-[#072D44] mb-1.5 uppercase tracking-wider">
               Password
@@ -131,7 +122,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             id="login-submit-button"
@@ -148,30 +138,16 @@ export default function LoginPage() {
             )}
           </button>
 
-        </form>
-
-        {/* Auto Fill Section (Background removed, clean layout) */}
-        <div className="mt-8 pt-6 border-t border-zinc-100">
-          <div className="flex items-center gap-1.5 mb-2">
-            <span className="text-xs font-bold text-[#072D44]">Auto Fill :</span>
+          <div className="pt-2 text-center">
             <button
               type="button"
               onClick={fillDemoCredentials}
-              className="text-xs font-bold text-[#064469] hover:text-[#072D44] underline underline-offset-2 cursor-pointer"
+              className="text-xs font-semibold text-[#064469] hover:text-[#072D44] transition underline cursor-pointer"
             >
-              Fill Credentials
+              Auto Fill Demo Credentials (emilys / emilyspass)
             </button>
           </div>
-          <div className="space-y-1 text-xs text-zinc-600 font-medium">
-            <div>
-              Username: <span className="font-mono text-[#072D44] font-bold">emilys</span>
-            </div>
-            <div>
-              Password: <span className="font-mono text-[#072D44] font-bold">emilyspass</span>
-            </div>
-          </div>
-        </div>
-
+        </form>
       </div>
     </div>
   );

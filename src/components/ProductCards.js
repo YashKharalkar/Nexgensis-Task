@@ -35,7 +35,6 @@ export default function ProductCards({ products, onEdit, onDelete }) {
             className="bg-white rounded-xl border border-[#D5E4EE] p-4 shadow-sm flex flex-col justify-between hover:border-[#064469]/50 transition"
           >
             <div>
-              {/* Product Image */}
               <div className="relative w-full h-40 bg-[#F0F6FA] rounded-lg overflow-hidden mb-2.5 border border-[#D5E4EE] flex items-center justify-center p-2">
                 <img
                   src={product.thumbnail || product.images?.[0] || 'https://via.placeholder.com/150'}
@@ -45,14 +44,12 @@ export default function ProductCards({ products, onEdit, onDelete }) {
                 />
               </div>
 
-              {/* Title & Category (Background removed, font size slightly increased) */}
               <div className="flex items-center justify-between gap-1.5 mb-1.5">
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-[#072D44] capitalize">
                   <FiTag className="w-3.5 h-3.5 text-[#064469]/80 shrink-0" />
                   <span>{product.category}</span>
                 </div>
 
-                {/* Stock (Background removed, dot indicator) */}
                 <div className="flex items-center text-xs font-semibold">
                   <span className={`inline-block w-2 h-2 rounded-full mr-1.5 shrink-0 ${stockDotColor}`} />
                   <span className={stockTextColor}>{stockText}</span>
@@ -66,7 +63,6 @@ export default function ProductCards({ products, onEdit, onDelete }) {
                 {product.title}
               </Link>
 
-              {/* Price (INR) & Rating */}
               <div className="flex items-center justify-between mb-3.5">
                 <div>
                   <span className="text-[17px] font-extrabold text-[#072D44]">
@@ -88,7 +84,6 @@ export default function ProductCards({ products, onEdit, onDelete }) {
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="grid grid-cols-3 gap-2 pt-3 border-t border-zinc-100">
               <Link
                 href={`/products/${product.id}`}
@@ -114,7 +109,6 @@ export default function ProductCards({ products, onEdit, onDelete }) {
                 <span>Delete</span>
               </button>
             </div>
-
           </div>
         );
       })}

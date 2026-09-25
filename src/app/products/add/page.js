@@ -27,14 +27,12 @@ export default function AddProductPage() {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Protected route check
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       router.replace('/login');
     }
   }, [authLoading, isAuthenticated, router]);
 
-  // Fetch categories
   useEffect(() => {
     const fetchCats = async () => {
       try {
@@ -45,7 +43,7 @@ export default function AddProductPage() {
           setFormData((prev) => ({ ...prev, category: prev.category || firstSlug }));
         }
       } catch (err) {
-        console.error('Failed to load categories:', err);
+        console.error(err);
       }
     };
 
@@ -103,7 +101,6 @@ export default function AddProductPage() {
         rating: 5.0,
       };
 
-      // Persist in localStorage so /products page picks it up immediately
       try {
         const saved = JSON.parse(localStorage.getItem('local_added_products') || '[]');
         localStorage.setItem(
@@ -111,10 +108,9 @@ export default function AddProductPage() {
           JSON.stringify([createdProduct, ...saved])
         );
       } catch (storageErr) {
-        console.error('LocalStorage write error:', storageErr);
+        console.error(storageErr);
       }
 
-      // Return to products page
       router.push('/products');
     } catch (err) {
       setErrors({ form: err.response?.data?.message || err.message || 'Failed to create product.' });
@@ -136,8 +132,6 @@ export default function AddProductPage() {
       <Navbar />
 
       <main className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 py-6">
-        
-        {/* Back Link */}
         <div className="mb-4">
           <Link
             href="/products"
@@ -148,7 +142,6 @@ export default function AddProductPage() {
           </Link>
         </div>
 
-        {/* Page Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-black text-[#072D44] tracking-tight">
             Add New Product
@@ -158,7 +151,6 @@ export default function AddProductPage() {
           </p>
         </div>
 
-        {/* Form Container (Clean white with border) */}
         <div className="bg-white rounded-2xl border border-[#D5E4EE] p-6 sm:p-8 shadow-sm">
           {errors.form && (
             <div className="mb-5 p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium">
@@ -167,8 +159,6 @@ export default function AddProductPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            
-            {/* Title */}
             <div>
               <label className="block text-xs font-bold text-[#072D44] mb-1.5 uppercase tracking-wider">
                 Product Title <span className="text-[#064469]">*</span>
@@ -186,7 +176,6 @@ export default function AddProductPage() {
               {errors.title && <p className="text-xs text-red-600 mt-1 font-medium">{errors.title}</p>}
             </div>
 
-            {/* Price (INR) & Stock */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-[#072D44] mb-1.5 uppercase tracking-wider">
@@ -224,7 +213,6 @@ export default function AddProductPage() {
               </div>
             </div>
 
-            {/* Category & Brand */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-[#072D44] mb-1.5 uppercase tracking-wider">
@@ -254,20 +242,19 @@ export default function AddProductPage() {
 
               <div>
                 <label className="block text-xs font-bold text-[#072D44] mb-1.5 uppercase tracking-wider">
-                  Brand Name
+                  Brand
                 </label>
                 <input
                   type="text"
                   id="product-brand-input"
                   value={formData.brand}
                   onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-                  placeholder="e.g. Tata, Boat, Titan"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-[#D5E4EE] bg-white text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition"
+                  placeholder="e.g. Sony, Apple"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-[#D5E4EE] text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition bg-white"
                 />
               </div>
             </div>
 
-            {/* Image URL */}
             <div>
               <label className="block text-xs font-bold text-[#072D44] mb-1.5 uppercase tracking-wider">
                 Product Image URL
@@ -278,43 +265,41 @@ export default function AddProductPage() {
                 value={formData.thumbnail}
                 onChange={(e) => setFormData({ ...formData, thumbnail: e.target.value })}
                 placeholder="https://example.com/product-image.jpg"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-[#D5E4EE] bg-white text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-[#D5E4EE] text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition bg-white"
               />
             </div>
 
-            {/* Description */}
             <div>
               <label className="block text-xs font-bold text-[#072D44] mb-1.5 uppercase tracking-wider">
-                Product Description
+                Description
               </label>
               <textarea
                 rows={4}
                 id="product-description-input"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                placeholder="Detailed description of features, materials, and warranty..."
-                className="w-full px-3.5 py-2.5 rounded-lg border border-[#D5E4EE] bg-white text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition resize-none"
+                placeholder="Describe key features, specifications, and warranty details..."
+                className="w-full px-3.5 py-2.5 rounded-lg border border-[#D5E4EE] text-sm text-[#072D44] focus:outline-none focus:ring-2 focus:ring-[#064469] transition bg-white resize-none"
               />
             </div>
 
-            {/* Action Buttons */}
             <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-100">
               <Link
                 href="/products"
-                className="px-5 py-2.5 text-xs font-bold text-[#072D44] hover:bg-[#F0F6FA] rounded-lg transition"
+                className="px-5 py-2.5 text-xs font-semibold text-[#072D44] hover:bg-[#F0F6FA] rounded-lg transition"
               >
                 Cancel
               </Link>
               <button
                 type="submit"
+                id="save-new-product-button"
                 disabled={isSubmitting}
-                id="create-product-submit-button"
                 className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#064469] hover:bg-[#072D44] disabled:opacity-50 text-white text-xs font-bold rounded-lg transition shadow-md shadow-[#064469]/20 cursor-pointer"
               >
                 {isSubmitting ? (
                   <>
                     <FiLoader className="w-4 h-4 animate-spin" />
-                    <span>Saving Product...</span>
+                    <span>Adding Product...</span>
                   </>
                 ) : (
                   <>
@@ -324,10 +309,8 @@ export default function AddProductPage() {
                 )}
               </button>
             </div>
-
           </form>
         </div>
-
       </main>
     </div>
   );

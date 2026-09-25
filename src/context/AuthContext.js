@@ -4,7 +4,6 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { authService } from '@/services/authService';
 
-// Create the Auth Context
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -13,7 +12,6 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // On initial page load, check if the user is already logged in from localStorage
   useEffect(() => {
     try {
       const savedToken = localStorage.getItem('token');
@@ -24,21 +22,16 @@ export function AuthProvider({ children }) {
         setUser(JSON.parse(savedUser));
       }
     } catch (error) {
-      console.error('Failed to restore auth state:', error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  // Login function
   const login = async (username, password) => {
-    // Call the auth service
     const data = await authService.login(username, password);
-
-    // DummyJSON returns either accessToken or token
     const authToken = data.accessToken || data.token;
 
-    // Save token and user object to state and localStorage
     setToken(authToken);
     setUser(data);
 
@@ -48,7 +41,6 @@ export function AuthProvider({ children }) {
     return data;
   };
 
-  // Logout function
   const logout = () => {
     setToken(null);
     setUser(null);
@@ -66,7 +58,6 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Custom hook for easy access to AuthContext
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {

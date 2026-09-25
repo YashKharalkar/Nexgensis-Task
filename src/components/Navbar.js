@@ -16,7 +16,6 @@ export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -46,24 +45,15 @@ export default function Navbar() {
     logout();
   };
 
-  // Back arrow: Keeps the user on the home products page (/products) and does not navigate out of the website
   const handleBack = () => {
-    if (pathname !== '/products') {
-      router.push('/products');
-    } else {
-      // Already on home products page, stay on /products
-      router.push('/products');
-    }
+    router.push('/products');
   };
 
   return (
     <header className="bg-[#072D44] border-b border-[#064469]/80 sticky top-0 z-30 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-14">
-          
-          {/* Left section: Back Button + Brand Name */}
           <div className="flex items-center gap-2">
-            {/* Back button: navigates to home product page, never outside the website */}
             <button
               type="button"
               onClick={handleBack}
@@ -75,7 +65,6 @@ export default function Navbar() {
               <FiArrowLeft className="w-5 h-5" />
             </button>
 
-            {/* Brand Name */}
             <Link
               href="/products"
               className="flex items-center text-lg sm:text-xl font-black tracking-tight text-white hover:text-[#D5E4EE] transition"
@@ -84,11 +73,8 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* User info with Logout in Dropdown (Transparent background) */}
           {user && (
             <div className="relative" ref={dropdownRef}>
-              
-              {/* Trigger Button: User Name & Avatar */}
               <button
                 type="button"
                 onClick={() => setIsDropdownOpen((prev) => !prev)}
@@ -110,11 +96,8 @@ export default function Navbar() {
                 />
               </button>
 
-              {/* Dropdown Menu (White background with border, username removed) */}
               {isDropdownOpen && (
                 <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-[#D5E4EE] rounded-xl shadow-xl p-1.5 z-50 text-xs animate-in fade-in slide-in-from-top-1 duration-150">
-                  
-                  {/* User Profile Header */}
                   <div className="px-3 py-2.5 border-b border-zinc-100">
                     <p className="text-[10px] uppercase font-bold text-zinc-400 tracking-wider">
                       Signed in as
@@ -124,26 +107,22 @@ export default function Navbar() {
                     </p>
                   </div>
 
-                  {/* Menu Items */}
                   <div className="pt-1">
                     <button
                       type="button"
                       onClick={handleLogout}
                       id="logout-button"
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-red-600 hover:bg-red-50 hover:text-red-700 transition cursor-pointer"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-[#072D44] cursor-pointer"
                       title="Log out of account"
                     >
                       <FiLogOut className="w-4 h-4 shrink-0" />
                       <span>Log Out</span>
                     </button>
                   </div>
-
                 </div>
               )}
-
             </div>
           )}
-
         </div>
       </div>
     </header>

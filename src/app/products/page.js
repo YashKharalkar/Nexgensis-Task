@@ -20,10 +20,8 @@ function ProductsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Request ID ref to protect against search/filter race conditions
   const latestRequestIdRef = useRef(0);
 
-  // 1. Read and sanitize query parameters from URL
   const rawPage = searchParams.get('page');
   const parsedPage = parseInt(rawPage, 10);
   const currentPage = isNaN(parsedPage) || parsedPage < 1 ? 1 : parsedPage;
@@ -37,22 +35,18 @@ function ProductsContent() {
   const sortBy = searchParams.get('sortBy') || '';
   const order = searchParams.get('order') || 'asc';
 
-  // 2. Component State
   const [products, setProducts] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Local CRUD overrides (optimistic frontend state)
   const [localAddedProducts, setLocalAddedProducts] = useState([]);
   const [localUpdatedProducts, setLocalUpdatedProducts] = useState({});
   const [localDeletedIds, setLocalDeletedIds] = useState(new Set());
 
-  // Toast notification state
   const [toast, setToast] = useState(null);
 
-  // Modals state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -63,7 +57,6 @@ function ProductsContent() {
     setTimeout(() => setToast(null), 3500);
   };
 
-  // Helper to update URL search parameters
   const updateUrlParams = useCallback(
     (newParams) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -81,21 +74,19 @@ function ProductsContent() {
     [router, searchParams]
   );
 
-  // Route protection
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       router.replace('/login');
     }
   }, [authLoading, isAuthenticated, router]);
 
-  // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const data = await productService.getCategories();
         setCategories(data);
       } catch (err) {
-        console.error('Failed to load categories:', err);
+        console.error(err);
       }
     };
 
@@ -107,17 +98,15 @@ function ProductsContent() {
           setLocalAddedProducts(savedAdded);
         }
       } catch (e) {
-        console.error('Failed to load local_added_products:', e);
+        console.error(e);
       }
     }
   }, [isAuthenticated]);
 
-  // Fetch products with race condition protection
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     setError(null);
 
-    // Increment request ID so previous slow/delayed requests are discarded
     const currentRequestId = ++latestRequestIdRef.current;
 
     try {
@@ -131,14 +120,12 @@ function ProductsContent() {
         order,
       });
 
-      // If a newer request has already fired, ignore this response
       if (currentRequestId !== latestRequestIdRef.current) {
         return;
       }
 
       let fetchedList = data.products || [];
 
-      // Apply local updates
       fetchedList = fetchedList.map((item) => {
         if (localUpdatedProducts[item.id]) {
           return { ...item, ...localUpdatedProducts[item.id] };
@@ -146,10 +133,8 @@ function ProductsContent() {
         return item;
       });
 
-      // Filter out deleted
       fetchedList = fetchedList.filter((item) => !localDeletedIds.has(item.id));
 
-      // Prepend local adds on page 1
       if (currentPage === 1 && !search && !category) {
         const customAdded = localAddedProducts.filter(
           (p) => !localDeletedIds.has(p.id)
@@ -186,7 +171,6 @@ function ProductsContent() {
     }
   }, [fetchProducts, isAuthenticated]);
 
-  // Filter handlers
   const handleSearchChange = (newSearch) => {
     updateUrlParams({ search: newSearch, page: 1 });
   };
@@ -211,7 +195,6 @@ function ProductsContent() {
     updateUrlParams({ limit: newSize, page: 1 });
   };
 
-  // CRUD Handlers
   const handleOpenAdd = () => {
     setSelectedProduct(null);
     setIsModalOpen(true);
@@ -281,13 +264,9 @@ function ProductsContent() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex flex-col text-[#072D44]">
-      {/* Top Navbar */}
       <Navbar />
 
-      {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
-        
-        {/* Toast Notification */}
         {toast && (
           <div className="fixed top-16 right-4 z-50 flex items-center gap-2 px-4 py-3 bg-[#072D44] text-white text-xs font-semibold rounded-xl shadow-2xl border border-[#064469] animate-slide-in">
             <FiCheckCircle className="w-4 h-4 text-[#64B5F6] shrink-0" />
@@ -295,7 +274,6 @@ function ProductsContent() {
           </div>
         )}
 
-        {/* Page Header */}
         <div className="mb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
             <h1 className="text-xl sm:text-2xl font-black text-[#072D44] tracking-tight">
@@ -307,7 +285,6 @@ function ProductsContent() {
           </div>
         </div>
 
-        {/* Filter Bar */}
         <FilterBar
           search={search}
           onSearchChange={handleSearchChange}
@@ -322,7 +299,6 @@ function ProductsContent() {
           totalResults={totalProducts}
         />
 
-        {/* Loading, Error, Empty, or Table */}
         {loading ? (
           <LoadingSpinner text="Fetching products from catalog..." />
         ) : error ? (
@@ -370,10 +346,8 @@ function ProductsContent() {
             />
           </>
         )}
-
       </main>
 
-      {/* Product Modal */}
       <ProductModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -382,7 +356,6 @@ function ProductsContent() {
         categories={categories}
       />
 
-      {/* Delete Confirmation Modal */}
       <DeleteConfirmModal
         isOpen={deleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
